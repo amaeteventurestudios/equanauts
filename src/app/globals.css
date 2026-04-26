@@ -282,78 +282,6 @@ button {
     linear-gradient(180deg, rgba(2, 6, 9, 0.1), transparent 30%, rgba(2, 6, 9, 0.08) 72%, rgba(2, 6, 9, 0.26));
 }
 
-.hero-anomaly {
-  position: absolute;
-  left: 56%;
-  top: 296px;
-  z-index: 11;
-  width: min(760px, 47vw);
-  height: 260px;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-  transform: translateX(-50%);
-}
-
-.anomaly-glow-field {
-  position: absolute;
-  inset: 12% 3%;
-  border-radius: 999px;
-  background:
-    radial-gradient(ellipse at center, rgba(182, 255, 255, 0.24), transparent 15%),
-    radial-gradient(ellipse at center, rgba(0, 229, 255, 0.24), rgba(0, 229, 255, 0.1) 34%, transparent 68%);
-  box-shadow:
-    0 0 65px rgba(0, 229, 255, 0.3),
-    inset 0 0 44px rgba(0, 229, 255, 0.22);
-  opacity: 0.72;
-  animation: anomaly-glow 4.8s ease-in-out infinite;
-}
-
-.anomaly-glow-field::before,
-.anomaly-glow-field::after {
-  content: "";
-  position: absolute;
-  inset: 18% 10%;
-  border: 1px solid rgba(0, 229, 255, 0.22);
-  border-radius: 999px;
-  animation: sonar-rotate 22s linear infinite;
-}
-
-.anomaly-glow-field::after {
-  inset: 30% 22%;
-  border-style: dashed;
-  animation-duration: 32s;
-}
-
-.anomaly-beam-breath {
-  position: absolute;
-  left: 50%;
-  top: -22%;
-  z-index: 2;
-  width: 12px;
-  height: 118%;
-  border-radius: 999px;
-  background: linear-gradient(180deg, transparent, rgba(122, 252, 255, 0.86), #00e5ff, transparent);
-  box-shadow: 0 0 38px rgba(0, 229, 255, 0.7);
-  transform: translateX(-50%);
-  opacity: 0.38;
-  animation: beam-pulse 5.4s ease-in-out infinite;
-}
-
-.particle-field {
-  position: absolute;
-  inset: -34% -12%;
-  background-image:
-    radial-gradient(circle, rgba(0, 229, 255, 0.65) 0 1px, transparent 1.5px),
-    linear-gradient(90deg, rgba(0, 229, 255, 0.08) 1px, transparent 1px);
-  background-size:
-    31px 29px,
-    52px 100%;
-  opacity: 0.36;
-  mask-image: radial-gradient(ellipse, black, transparent 72%);
-  animation: particles-drift 8s linear infinite;
-}
-
 .depth-ruler {
   position: absolute;
   left: 42px;
@@ -387,8 +315,7 @@ button {
 .hero-location,
 .hero-copy,
 .hero-depth,
-.scanning-label,
-.boundary-detected {
+.scanning-label {
   position: absolute;
   z-index: 14;
 }
@@ -608,26 +535,6 @@ button {
 .scanning-label span {
   width: 90px;
   border-top: 1px solid rgba(200, 146, 42, 0.5);
-}
-
-.boundary-detected {
-  left: 50%;
-  bottom: 78px;
-  translate: -50% 10px;
-  border: 1px solid rgba(0, 229, 255, 0.55);
-  background: rgba(2, 6, 9, 0.78);
-  padding: 10px 16px;
-  color: #00e5ff;
-  font-family: var(--font-geist-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  opacity: 0;
-  transition: 180ms ease;
-}
-
-.boundary-detected.is-visible {
-  translate: -50% 0;
-  opacity: 1;
 }
 
 .dashboard-row {
@@ -1434,15 +1341,32 @@ button {
 
 .pulse-fallback {
   background:
-    radial-gradient(circle at center, rgba(0, 234, 255, 0.32), transparent 8rem),
-    repeating-radial-gradient(circle at center, rgba(0, 234, 255, 0.35) 0 1px, transparent 1px 2.6rem),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 234, 255, 0.08), rgba(0, 0, 0, 0.08));
-  filter: blur(0.2px);
+    linear-gradient(90deg, rgba(2, 6, 9, 0.44), rgba(2, 6, 9, 0.08) 48%, rgba(2, 6, 9, 0.58)),
+    linear-gradient(180deg, rgba(2, 6, 9, 0.22), transparent 36%, rgba(2, 6, 9, 0.36)),
+    url("/images/luminous_abyss_beneath_the_sea_surface.png") center / cover no-repeat;
+  filter: saturate(1.08) contrast(1.08);
+}
+
+.pulse-fallback::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 54%, rgba(0, 234, 255, 0.24), transparent 32%),
+    repeating-linear-gradient(90deg, rgba(0, 229, 255, 0.08) 0 1px, transparent 1px 68px),
+    repeating-linear-gradient(0deg, rgba(200, 146, 42, 0.055) 0 1px, transparent 1px 54px);
+  mix-blend-mode: screen;
+  opacity: 0.54;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .pulse-fallback {
-    animation: scan-pulse 5s ease-in-out infinite;
+    animation: scan-pulse 7s ease-in-out infinite;
+  }
+
+  .pulse-fallback::after {
+    animation: scan-drift 11s ease-in-out infinite;
   }
 
   .archive-panel {
@@ -1453,12 +1377,25 @@ button {
 @keyframes scan-pulse {
   0%,
   100% {
-    opacity: 0.5;
-    transform: scale(0.98);
+    opacity: 0.82;
+    transform: scale(1);
   }
   50% {
-    opacity: 0.86;
-    transform: scale(1.02);
+    opacity: 1;
+    transform: scale(1.015);
+  }
+}
+
+@keyframes scan-drift {
+  0%,
+  100% {
+    opacity: 0.42;
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    opacity: 0.68;
+    transform: translate3d(10px, -6px, 0);
   }
 }
 
@@ -1519,40 +1456,9 @@ button {
   }
 }
 
-@keyframes anomaly-glow {
-  0%,
-  100% {
-    opacity: 0.75;
-    scale: 0.98;
-  }
-  50% {
-    opacity: 1;
-    scale: 1.02;
-  }
-}
-
 @keyframes sonar-rotate {
   to {
     rotate: 360deg;
-  }
-}
-
-@keyframes beam-pulse {
-  0%,
-  100% {
-    opacity: 0.55;
-  }
-  45% {
-    opacity: 1;
-  }
-}
-
-@keyframes particles-drift {
-  from {
-    background-position: 0 0, 0 0;
-  }
-  to {
-    background-position: 60px 90px, 52px 0;
   }
 }
 
@@ -1678,13 +1584,6 @@ button {
     max-width: 330px;
     margin-right: auto;
     margin-left: auto;
-  }
-
-  .hero-anomaly {
-    left: 50%;
-    top: 455px;
-    width: 660px;
-    max-width: 110vw;
   }
 
   .scanning-label {

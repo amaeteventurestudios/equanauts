@@ -3,16 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, FileText } from "lucide-react";
-import { useState } from "react";
 
 export function HeroPortal() {
-  const [detected, setDetected] = useState(false);
-
-  function triggerPulse() {
-    setDetected(true);
-    window.setTimeout(() => setDetected(false), 1700);
-  }
-
   return (
     <section className="hero-portal hud-frame relative overflow-hidden border border-gold/35 bg-[#050c12]">
       <Image
@@ -31,16 +23,6 @@ export function HeroPortal() {
         <span />
         <span />
       </div>
-      <button
-        type="button"
-        onClick={triggerPulse}
-        className="hero-anomaly"
-        aria-label="Trigger Pulse Geometry response"
-      >
-        <span className="anomaly-glow-field" />
-        <span className="anomaly-beam-breath" />
-        <span className="particle-field" />
-      </button>
       <div className="depth-ruler" aria-hidden="true">
         {[100, 200, 300, 400, 500, 600].map((mark) => (
           <span key={mark}>{mark}</span>
@@ -84,9 +66,6 @@ export function HeroPortal() {
         <span />
         SCANNING HORIZON
         <span />
-      </div>
-      <div className={detected ? "boundary-detected is-visible" : "boundary-detected"}>
-        BOUNDARY RESPONSE DETECTED
       </div>
     </section>
   );
